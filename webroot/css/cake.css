@@ -56,13 +56,13 @@ legend {
     margin-top: 2rem;
     border: 0;
     width: 100%;
-    table-layout: fixed;
+/*     table-layout: fixed; */
 }
 
 .related table {
     border: 0;
     width: 100%;
-    table-layout: fixed;
+/*     table-layout: fixed; */
 }
 
 .index table thead {
@@ -405,7 +405,7 @@ table {
     background: #fff;
     margin-bottom: 1.25rem;
     border: none;
-    table-layout: fixed;
+/*     table-layout: fixed; */
     width: 100%;
 }
 

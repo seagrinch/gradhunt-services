@@ -21,7 +21,7 @@ class ProgramsController extends AppController
         $programs = $this->paginate($this->Programs);
 
         $this->set(compact('programs'));
-        $this->set('_serialize', ['programs']);
+        $this->set('_serialize', 'programs');
     }
 
     /**
@@ -34,78 +34,31 @@ class ProgramsController extends AppController
     public function view($id = null)
     {
         $program = $this->Programs->get($id, [
-            'contain' => ['Offerings']
+            'contain' => ['Offerings.Schools']
         ]);
 
         $this->set('program', $program);
-        $this->set('_serialize', ['program']);
+        $this->set('_serialize', 'program');
     }
 
     /**
-     * Add method
+     * Majors method
      *
-     * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Network\Response|null
      */
-    public function add()
+    public function majors()
     {
-        $program = $this->Programs->newEntity();
-        if ($this->request->is('post')) {
-            $program = $this->Programs->patchEntity($program, $this->request->data);
-            if ($this->Programs->save($program)) {
-                $this->Flash->success(__('The program has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The program could not be saved. Please, try again.'));
-            }
-        }
-        $this->set(compact('program'));
-        $this->set('_serialize', ['program']);
+      $query = $this->Programs->find('all');
+      $query->contain([]);
+      $query->where(['char_length(code)' => 7]);
+      if ($this->request->is('json') ) { //Formerly ajax
+        $this->paginate['limit'] = 5000;
+        //$this->set('_serialize', false);
+      }
+      $this->set('programs',$this->paginate($query));
+      $this->set('_serialize', 'programs');
+      $this->render('index');
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Program id.
-     * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $program = $this->Programs->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $program = $this->Programs->patchEntity($program, $this->request->data);
-            if ($this->Programs->save($program)) {
-                $this->Flash->success(__('The program has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The program could not be saved. Please, try again.'));
-            }
-        }
-        $this->set(compact('program'));
-        $this->set('_serialize', ['program']);
-    }
-
-    /**
-     * Delete method
-     *
-     * @param string|null $id Program id.
-     * @return \Cake\Network\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $program = $this->Programs->get($id);
-        if ($this->Programs->delete($program)) {
-            $this->Flash->success(__('The program has been deleted.'));
-        } else {
-            $this->Flash->error(__('The program could not be deleted. Please, try again.'));
-        }
-
-        return $this->redirect(['action' => 'index']);
-    }
 }

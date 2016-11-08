@@ -1,9 +1,11 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Program'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Offerings'), ['controller' => 'Offerings', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Offering'), ['controller' => 'Offerings', 'action' => 'add']) ?></li>
+        <li class="heading"><?= __('Menu') ?></li>
+        <li><?= $this->Html->link(__('List of Programs'), ['controller'=>'programs', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('List of Schools'), ['controller'=>'schools', 'action' => 'index']) ?> </li>
+        <hr>
+        <li><?= $this->Html->link(__('JSON List of All Programs'), ['action' => 'index', '_ext'=>'json']) ?> </li>
+        <li><?= $this->Html->link(__('JSON List of Majors'), ['action' => 'majors', '_ext'=>'json']) ?> </li>
     </ul>
 </nav>
 <div class="programs index large-9 medium-8 columns content">
@@ -15,7 +17,6 @@
                 <th scope="col"><?= $this->Paginator->sort('family') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('code') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('title') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -24,21 +25,18 @@
                 <td><?= $this->Number->format($program->id) ?></td>
                 <td><?= h($program->family) ?></td>
                 <td><?= h($program->code) ?></td>
-                <td><?= h($program->title) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $program->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $program->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $program->id], ['confirm' => __('Are you sure you want to delete # {0}?', $program->id)]) ?>
-                </td>
+                <td><?= $this->Html->link($program->title, ['action' => 'view', $program->id]) ?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
     <div class="paginator">
         <ul class="pagination">
+            <?= $this->Paginator->first('<< ' . __('first')) ?>
             <?= $this->Paginator->prev('< ' . __('previous')) ?>
             <?= $this->Paginator->numbers() ?>
             <?= $this->Paginator->next(__('next') . ' >') ?>
+            <?= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
         <p><?= $this->Paginator->counter() ?></p>
     </div>

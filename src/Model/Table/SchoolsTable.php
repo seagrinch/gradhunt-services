@@ -37,11 +37,9 @@ class SchoolsTable extends Table
         $this->displayField('id');
         $this->primaryKey('id');
 
-        $this->hasMany('Favorites', [
-            'foreignKey' => 'school_id'
-        ]);
         $this->hasMany('Offerings', [
-            'foreignKey' => 'school_id'
+            'foreignKey' => 'school_id',
+            'conditions'=>['char_length(code)' => 7]
         ]);
     }
 
