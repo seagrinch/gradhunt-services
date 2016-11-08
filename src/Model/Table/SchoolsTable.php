@@ -39,7 +39,6 @@ class SchoolsTable extends Table
 
         $this->hasMany('Offerings', [
             'foreignKey' => 'school_id',
-            'conditions'=>['char_length(code)' => 7]
         ]);
     }
 

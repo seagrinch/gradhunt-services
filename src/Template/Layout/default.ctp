@@ -43,7 +43,7 @@ $cakeDescription = 'GradHunt Web Services';
         <div class="top-bar-section">
             <ul class="right">
                 <li></li>
-                <li><a href="">Documentation</a></li>
+                <li><a href="/">Documentation</a></li>
             </ul>
         </div>
     </nav>
