@@ -46,6 +46,17 @@ class AppController extends Controller
     }
 
     /**
+     * beforeFilter method.
+     */
+    public function beforeFilter(Event $event)
+    {
+        $this->response->header('Access-Control-Allow-Origin','*');
+        $this->response->header('Access-Control-Allow-Methods','*');
+        $this->response->header('Access-Control-Allow-Headers','Origin, X-Requested-With, Content-Type, Authorization');
+    }
+
+
+    /**
      * Before render callback.
      *
      * @param \Cake\Event\Event $event The beforeRender event.
