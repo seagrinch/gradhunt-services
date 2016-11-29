@@ -70,7 +70,7 @@ class SchoolsController extends AppController
       }
 
       if ($this->request->is('json') ) {
-        $this->paginate['limit'] = 3;
+        $this->paginate['limit'] = 5;
       }
 
       $this->set('schools',$this->paginate($query));
